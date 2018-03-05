@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" 
+    	content="initial-scale=1,width=device-width,maximum-scale=1.0,minimum-scale=1.0" />
+    <title>Music</title>
+    <script type="text/javascript">
+    	document.getElementsByTagName("html")[0].style.fontSize
+    	=document.documentElement.clientWidth/10+"px";
+    </script>
+    <style type="text/css">
+    	*{
+			margin: 0;
+			padding: 0;
+		}
+		
+		@font-face {
+			font-family: 'iconfont';
+		    src: url('iconfont/iconfont.eot'); 
+		    src: url('iconfont/iconfont.eot?#iefix') format('embedded-opentype'), 
+		    url('iconfont/iconfont.woff') format('woff'), 
+		    url('iconfont/iconfont.ttf') format('truetype'),
+		    url('iconfont/iconfont.svg#iconfont') format('svg'); 
+		}
+		.iconfont{
+		    font-family:"iconfont" !important;
+		    float:left;
+		    font-size:1.5rem;font-style:normal;
+		    -webkit-font-smoothing: antialiased;
+		    -webkit-text-stroke-width: 0.2px;
+		    -moz-osx-font-smoothing: grayscale;
+		    color: #fff;
+		    margin:0 0.5rem;
+	    }		
+		#music{
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			/*background-color: black;*/
+			background-image: url("img/bg.jpg");
+		}
+		header{
+			width: 10rem;
+			height: 2rem;
+			color:#fff;
+			text-align: center;
+		}
+		header h3{
+			font-size: 0.5rem;
+			line-height: 1.3rem;
+		}
+		header p{
+			font-size:0.3rem;
+		}
+		section.singer{
+			width: 8rem;
+			height: 8rem;
+			border:2px solid #fff;
+			border-radius: 50%;
+			margin: auto;
+		}
+		section.singer div{
+			width: 7.6rem;
+			height: 7.6rem;
+			background: rgba(255,255,255,0.5);
+			border-radius: 50%;
+			margin: 0.2rem;
+			
+		}
+		section.singer img{
+			width: 7rem;
+			height: 7rem;
+			border-radius: 50%;
+			margin: 0.3rem;
+		}
+		.progress{
+			width: 9rem;
+			height: 0.1rem;
+			background: #906;
+			margin: 1rem auto;
+		}
+		.progress .pro-bg{
+			width: 0;
+			height: 0.1rem;
+			background: #0f6;
+		}
+		.progress .bar{
+			width: 0.2rem;
+			height: 0.2rem;
+			background: #fff;
+			border-radius: 50%;
+			transform: translate(0rem,-0.15rem);
+		}
+		.btn{
+			width: 8rem;
+			margin: auto;
+		}
+		.pause{
+			display: none;	
+		}	
+			
+		/*调用动画*/
+		.turn.rotate{
+			/*名    时间    linear匀速   infinite无限循环*/
+			-webkit-animation:rot 5s linear infinite;
+			-moz-animation:rot 5s linear infinite;
+			-ms-animation: rot 5s linear infinite;
+			-o-animation:rot 5s linear infinite ;
+			animation: rot 5s linear infinite;
+		}
+		/*定义动画   旋转 0°到360°*/
+		@keyframes rot{
+			from{transform: rotate(0deg);}
+			to{transform:rotate(360deg);}
+		}
+    </style>
+</head>
+<body>
+	<div id="music">
+			<header>
+				<h3 id="title">林波巷</h3>
+				<p id="name">布皮树</p>
+			</header>
+			
+			<section class="singer">
+				<div class="turn" id="imgs">
+					<img src="img/tx.jpg" />
+				</div>
+			</section>
+			
+			<section class="progress">
+				<div class="pro-bg"></div>
+				<div class="bar"></div>
+			</section>
+			<section class="btn">
+				<div class="prev iconfont">&#xe6de;</div>
+				<div class="play iconfont">&#xe60d;</div>
+				<div class="pause iconfont">&#xe62f;</div>
+				<div class="next iconfont">&#xe6dd;</div>
+			</section>
+				<audio src="http://mp3-cdn2.luoo.net/low/luoo/radio834/01.mp3" id="myMusic"></audio>						
+				
+		</div>
+		<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+		<script>
+			//var  Imgs=document.getElementById("picture").getElementsByTagName("img");
+			var img = document.getElementById("imgs").getElementsByTagName("img")[0];
+			var turn = document.getElementsByClassName("turn")[0];
+			var num=1;
+			var title = [
+				{title:"闪光的回忆",name:"逃跑计划"},
+				{title:"林波巷",name:"布皮树"},
+				{title:"午夜的直球对决",name:"午夜乒乓"},
+			];
+			var src=[
+			"http://mp3-cdn2.luoo.net/low/chinese/20170617.mp3",
+			"http://mp3-cdn2.luoo.net/low/luoo/radio834/01.mp3",
+			"http://mp3-cdn2.luoo.net/low/chinese/20170613.mp3",
+			];
+			var pic = [
+				"img/1.jpg",
+				"img/2.jpg",
+				"img/3.jpg",
+			]
+			var tpic = [
+				" url('img/5.jpg')",
+				" url('img/4.jpg')",
+				" url('img/5.jpg')",
+			]
+			var mymusic = $("#music")[0];
+			var myMusic = $("#myMusic").get(0);
+			//播放
+			$(".play").on('touchend',function(e){
+				turn.className += " rotate";
+				myMusic.play();
+				$(".pause").show();
+				$(".play").hide();
+			});
+			$(".pause").on('touchend',function(e){	
+				turn.className = " turn";
+				myMusic.pause();
+				$(".play").show();
+				$(".pause").hide();
+			});
+
+			$(".prev").on('touchend',function(e){	
+				if(num==0)
+					num=2;
+				else
+					num--;
+				myMusic.src=src[num];
+				img.src=pic[num];
+				mymusic.style.backgroundImage=tpic[num];
+				myMusic.play();
+				turn.className += " rotate";
+				$(".pause").show();
+				$(".play").hide();
+				myMusic.currentTime=0;
+				document.getElementById('title').innerHTML = title[num].title;
+				document.getElementById('name').innerHTML = title[num].name;
+				
+			});
+			$(".next").on('touchend',function(e){	
+				//console.log(num);
+				if(num==2)
+					num=0;
+				else
+					num++;
+				myMusic.src=src[num];
+				myMusic.play();
+				turn.className += " rotate";
+				$(".pause").show();
+				$(".play").hide();
+				img.src=pic[num];
+				mymusic.style.backgroundImage=tpic[num];
+				myMusic.currentTime=0;
+				document.getElementById('title').innerHTML = title[num].title;
+				document.getElementById('name').innerHTML = title[num].name;
+				
+			});
+
+			//进度条
+			var w = $(".progress").width()-$(".bar").width();
+			myMusic.addEventListener("timeupdate",function(e){
+//				console.log(this.currentTime);
+//				console.log(this.duration);  //获取时间
+				var s = this.currentTime/this.duration;
+				$(".pro-bg").css("width",w*s+"px");	
+				$(".bar").css("transform","translate("+w*s+"px,-0.15rem)");
+			
+			});
+			//拖拽进度
+			$(".bar").get(0).addEventListener("touchstart",function(e){
+				var x1 = e.changedTouches[0].pageX;
+				var l = $(".bar").offset().left;
+				document.addEventListener("touchmove",function(e){
+					var x =e.changedTouches[0].pageX-x1+l;
+					if(x<0)
+						x=0;
+					else if(x>w)
+						x=w;	
+					$(".pro-bg").css("width",x+"px");		
+					$(".bar").css("transform","translate("+x+"px,-0.15rem)");
+					myMusic.currentTime=x/w*myMusic.duration; 
+				});
+			});
+			
+		</script>
+</body>
+</html>

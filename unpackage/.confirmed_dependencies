@@ -1,0 +1,13 @@
+{
+	"index.html": {
+		"resources": [
+			"mp3/宋祖英-好日子.mp3",
+			"img/tx.jpg",
+			"js/jquery-1.11.1.min.js",
+			"iconfont/iconfont.woff",
+			"img/bg.jpg",
+			"img/1.jpg",
+			"mp3/儿童歌曲 - 童年.mp3"
+		]
+	}
+}
